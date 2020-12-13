@@ -1,11 +1,6 @@
 package com.revature.models;
 
 public class User extends Object {
-	
-	private int userId;
-	
-	private String type;
-
 
 	private String username;
 	
@@ -13,39 +8,19 @@ public class User extends Object {
 	
 	private String firstName;
 	
-	private String lastName;
-
+	private String lastName;	
+	
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public User(int userId, String type, String username, String password, String firstName, String lastName) {
-		super();
-		this.userId = userId;
-		this.type = type;
+	public User (String username, String password, String firstName, String lastName) {
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;	
 		this.lastName = lastName;
 	}
-	
-	
-	public String getType() {
-		return type;
-	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
 
 	public String getUsername() {
 		return username;
@@ -79,9 +54,4 @@ public class User extends Object {
 		this.lastName = lastName;
 	}
 
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName="
-				+ firstName + ", lastName=" + lastName + "]";
-	}
 }
