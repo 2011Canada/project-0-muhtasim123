@@ -14,6 +14,7 @@ import com.revature.models.Employee;
 import com.revature.repositories.LoginDAO;
 import com.revature.services.CustomerServices;
 import com.revature.services.EmployeeServices;
+import com.revature.services.TransactionServices;
 
 public class MainMenu {
 	
@@ -349,7 +350,7 @@ public class MainMenu {
 				break;
 			case 4:
 				System.out.println("\n-----View All Transactions-----");
-				employeeMenu(e);
+				viewAllTransactions(e);
 				break;
 		}
 	}
@@ -427,6 +428,7 @@ public class MainMenu {
 	}
 	
 	public void viewAllAccounts(Employee e) {
+		
 		EmployeeServices es = new EmployeeServices();
 		es.viewAllAccounts();
 		
@@ -439,6 +441,21 @@ public class MainMenu {
 		
 		employeeMenu(e);
 		
+	}
+	
+	public void viewAllTransactions(Employee e) {
+	
+		TransactionServices ts = new TransactionServices();
+		ts.allTransactions();
+		
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		employeeMenu(e);
 	}
 }
 

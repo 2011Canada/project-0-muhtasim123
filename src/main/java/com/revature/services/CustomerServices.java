@@ -2,10 +2,13 @@ package com.revature.services;
 
 import com.revature.models.Account;
 import com.revature.models.Customer;
+import com.revature.models.Transaction;
 import com.revature.models.Transfers;
 import com.revature.repositories.CustomerDAO;
 
 public class CustomerServices {
+	
+	TransactionServices ts = new TransactionServices();
 	
 	public void createCustomer(String username, String password, String firstName, String lastName) {
 		
@@ -14,6 +17,11 @@ public class CustomerServices {
 		CustomerDAO cusdao = new CustomerDAO();
 		
 		cusdao.createCustomer(cus);
+		
+		Transaction t = new Transaction("Customer login created for " + cus.getFirstName() + " " + cus.getLastName());
+		ts.addTransaction(t);
+		
+
 	}
 	
 	public void createAccount(String accountName, int customerId, double balance) {
@@ -22,6 +30,9 @@ public class CustomerServices {
 		
 		CustomerDAO cusdao = new CustomerDAO();
 		cusdao.createAccount(acc);
+		
+		Transaction t = new Transaction("Account " + acc.getAccountName() + " created for " + acc.getCustomerId());
+		ts.addTransaction(t);
 	}
 
 	public void viewAccount(Customer c) {
@@ -36,6 +47,9 @@ public class CustomerServices {
 		acc.setAccountName(account);
 		
 		cusdao.depositFunds(c, acc, amount);
+		
+		Transaction t = new Transaction("$" + amount + " deposited into account " + account + " for customer " + c.getCustomerId());
+		ts.addTransaction(t);
 	}
 	
 	public double balance(Customer c, String account) {
@@ -59,6 +73,9 @@ public class CustomerServices {
 		acc.setAccountName(account);
 	
 		cusdao.withdrawFunds(c, acc, amount);
+		
+		Transaction t = new Transaction("$" + amount + " withdrawn into account " + account + " for customer " + c.getCustomerId());
+		ts.addTransaction(t);
 	}
 	
 	public void allBalance(Customer c) {
@@ -80,6 +97,9 @@ public class CustomerServices {
 		transfer.setCustomerId(c.getCustomerId());
 		cusdao.transferFunds(transfer);
 		
+		Transaction t = new Transaction("$" + amount + " transfered from account " + accountFrom + " to account " + accountTo);
+		ts.addTransaction(t);
+		
 	}
 	
 	public void viewTransfers(Customer c) {
@@ -93,7 +113,7 @@ public class CustomerServices {
 		transfer.setTransferId(transferId);
 		
 		CustomerDAO cusdao = new CustomerDAO();
-		
+		cusdao.acceptTransfer(transfer);
 	}
 
 }
