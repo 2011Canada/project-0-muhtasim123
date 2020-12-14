@@ -1,15 +1,19 @@
 package com.revature.menus;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.revature.models.Account;
 import com.revature.models.Customer;
 import com.revature.models.Employee;
 import com.revature.repositories.LoginDAO;
 import com.revature.services.CustomerServices;
+import com.revature.services.EmployeeServices;
 
 public class MainMenu {
 	
@@ -303,6 +307,75 @@ public class MainMenu {
 	
 	public void employeeMenu(Employee e) {
 		
+		int choice = 0;
+		System.out.println("\nHello " + e.getFirstName() + " " + e.getLastName() + "!");
+		
+		System.out.println("\nSelect one of the options below: " +
+				"\n	1 - Approve Accounts" +
+				"\n	2 - View All Accounts" +
+				"\n	3 - View All Transactions");
+		
+		try {
+			choice = in.nextInt();
+			if (choice <= 0 || choice > 3) {
+				System.out.println("\n\nPlease select a valid option: \n");
+				employeeMenu(e);
+			}
+		} catch (InputMismatchException ex) {
+			System.out.println("\n\nPlease select a valid option: \n");
+			employeeMenu(e);
+		}
+		
+		switch(choice) {
+			case 1:
+				System.out.println("\n-----Approve Accounts-----");
+				approveAccount(e);
+				break;
+			case 2:
+				System.out.println("\n-----View All Accounts-----");
+				employeeMenu(e);
+				break;
+			case 3:
+				System.out.println("\n-----View All Transactions-----");
+				employeeMenu(e);
+				break;
+		}
+	}
+	
+	public void approveAccount(Employee e) {
+		
+		EmployeeServices es = new EmployeeServices();
+		List<Account> allPendingAccounts = new ArrayList<Account>();
+		
+		List<String> accountNames = new ArrayList<>();
+		
+		allPendingAccounts = es.allPendingAccounts();
+		
+		for (int i = 0; i < allPendingAccounts.size(); i++) {
+			System.out.println("Account Name: " + allPendingAccounts.get(i).getAccountName() +
+					"	Account Balance: " + allPendingAccounts.get(i).getBalance() +
+					"	Customer ID: " + allPendingAccounts.get(i).getCustomerId());
+			
+			String accountName = allPendingAccounts.get(i).getAccountName();
+			accountNames.add(accountName);
+		}
+		
+		System.out.println("\n\n\n");
+		
+		in.nextLine();
+		
+		System.out.print("Enter account name to approve: ");
+		String account = in.nextLine();
+		
+		for (int i = 0; i < accountNames.size(); i++) {
+			if (accountNames.get(i).contentEquals(account)) {
+				es.acceptAccount(account);
+				employeeMenu(e);
+			} else {
+				System.out.println("\n\nInvalid selection!\n\n\n");
+				approveAccount(e);
+			}
+		}
 	}
 }
 
