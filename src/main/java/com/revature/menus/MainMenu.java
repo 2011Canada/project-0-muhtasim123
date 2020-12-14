@@ -147,11 +147,12 @@ public class MainMenu {
 				"\n	3 - Withdraw Funds" +
 				"\n	4 - View Balance" +
 				"\n	5 - Transfer Funds" +
-				"\n	6 - View Pending Transfers");
+				"\n	6 - View Pending Transfers" +
+				"\n	7 - Logout");
 		
 		try {
 			choice = in.nextInt();
-			if (choice <= 0 || choice > 6) {
+			if (choice <= 0 || choice > 7) {
 				System.out.println("\n\nPlease select a valid option: \n");
 				customerMenu(c);
 			}
@@ -185,6 +186,9 @@ public class MainMenu {
 				System.out.println("\n-----View Pending Transfer-----\n");
 				pendingTransfer(c);
 				break;
+			case 7:
+				System.out.println("\n-----Logged out!-----\n");
+				firstMenu();
 		}
 		
 	}
@@ -323,11 +327,12 @@ public class MainMenu {
 				"\n	1 - Approve Accounts" +
 				"\n	2 - Reject Accounts" +
 				"\n	3 - View All Accounts" +
-				"\n	4 - View All Transactions");
+				"\n	4 - View All Transactions" +
+				"\n	5 - Logout");
 		
 		try {
 			choice = in.nextInt();
-			if (choice <= 0 || choice > 4) {
+			if (choice <= 0 || choice > 5) {
 				System.out.println("\n\nPlease select a valid option: \n");
 				employeeMenu(e);
 			}
@@ -352,6 +357,9 @@ public class MainMenu {
 				System.out.println("\n-----View All Transactions-----\n");
 				viewAllTransactions(e);
 				break;
+			case 5:
+				System.out.println("\n-----Logged Out-----\n");
+				firstMenu();
 		}
 	}
 	
@@ -384,11 +392,11 @@ public class MainMenu {
 			if (accountNames.get(i).contentEquals(account)) {
 				es.acceptAccount(account);
 				employeeMenu(e);
-			} else {
-				System.out.println("\n\nInvalid selection!\n\n\n");
-				approveAccount(e);
 			}
 		}
+		
+		System.out.println("\n\nInvalid selection!\n\n\n");
+		approveAccount(e);
 	}
 	
 	public void rejectAccount(Employee e) {
@@ -420,11 +428,10 @@ public class MainMenu {
 			if (accountNames.get(i).contentEquals(account)) {
 				es.rejectAccount(account);
 				employeeMenu(e);
-			} else {
-				System.out.println("\n\nInvalid selection!\n\n\n");
-				rejectAccount(e);
 			}
 		}
+		System.out.println("\n\nInvalid selection!\n\n\n");
+		rejectAccount(e);
 	}
 	
 	public void viewAllAccounts(Employee e) {

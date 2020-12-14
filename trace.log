@@ -68,3 +68,19 @@
 2020-12-14 17:59:51 project0 [INFO] Bank App started
 2020-12-14 18:00:06 project0 [INFO] $25.0 transfered from account testing2 to account testing
 2020-12-14 18:00:12 project0 [INFO] Transfer ID 3 has been accepted
+2020-12-14 18:03:57 project0 [INFO] Bank App started
+2020-12-14 18:16:57 project0 [INFO] Bank App started
+2020-12-14 18:17:31 project0 [INFO] Bank App started
+2020-12-14 18:29:12 project0 [INFO] Bank App started
+2020-12-14 18:31:30 project0 [INFO] Bank App started
+2020-12-14 18:40:46 project0 [INFO] Bank App started
+2020-12-14 18:41:25 project0 [INFO] Account myaccount created for 1
+2020-12-14 18:42:58 project0 [INFO] Bank App started
+2020-12-14 18:43:09 project0 [INFO] Customer login created for Demo Account
+2020-12-14 18:45:28 project0 [INFO] Bank App started
+2020-12-14 18:46:34 project0 [INFO] Bank App started
+2020-12-14 18:46:47 project0 [INFO] Account myaccount has been accepted
+2020-12-14 18:48:07 project0 [INFO] Bank App started
+2020-12-14 18:48:19 project0 [INFO] Account test has been rejected
+2020-12-14 18:56:31 project0 [INFO] Bank App started
+2020-12-14 18:56:53 project0 [INFO] Account savings has been rejected

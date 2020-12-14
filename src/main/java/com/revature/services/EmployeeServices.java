@@ -48,7 +48,7 @@ public class EmployeeServices {
 		
 		EmployeeDAO empdao = new EmployeeDAO();
 		
-		empdao.acceptAccount(acc);
+		empdao.rejectAccount(acc);
 		
 		Transaction t = new Transaction("Account " + account + " has been rejected");
 		ts.addTransaction(t);

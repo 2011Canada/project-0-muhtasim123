@@ -1,79 +1,98 @@
 package com.revature.repositories;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.models.Account;
+import com.revature.util.ConnectionFactory;
 
 public class EmployeeDAO {
+	
+	ConnectionFactory cf = ConnectionFactory.getConnectionFacotry();
 
 	public List<Account> allPendingAccounts(){
-		//write SQL stuff
-		//find all accounts where state = 0
+
 		List<Account> allAccounts = new ArrayList<Account>();
 		
-		Account a1 = new Account();
-		Account a2 = new Account();
+		Connection conn = cf.getConnection();
 		
-		a1.setAccountName("First Account");
-		a1.setAccountState(0);
-		a1.setBalance(500);
-		a1.setCustomerId(1);
-		
-		a2.setAccountName("Second Account");
-		a2.setAccountState(0);
-		a2.setBalance(10000);
-		a2.setCustomerId(1);
-		
-		allAccounts.add(a1);
-		allAccounts.add(a2);
+		try {
+			String sql = "select * from \"account\" where \"accountState\" = 0";
+			
+			PreparedStatement showPending = conn.prepareStatement(sql);
+			ResultSet res = showPending.executeQuery();
+			
+			while(res.next()) {
+				Account a = new Account();
+				a.setAccountName(res.getString("accountName"));
+				a.setBalance(res.getDouble("balance"));
+				a.setCustomerId(res.getInt("customerId"));
+				
+				allAccounts.add(a);
+			}
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 		
 		return allAccounts;
 		
 	}
 	
 	public void acceptAccount(Account a) {
-		//write SQL
-		//change account status to 1
 		
-		System.out.println("Account " + a.getAccountName() + " has been approved!");
+		Connection conn = cf.getConnection();
+		
+		
+		try {
+			String sql = "update \"account\" set \"accountState\" = 1 where \"accountName\" = '" + a.getAccountName() + "';";
+			
+			PreparedStatement approve = conn.prepareStatement(sql);
+			approve.executeUpdate();
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public void rejectAccount(Account a) {
-		//write SQL stuff
-		//delete account from accounts table
 		
-		System.out.println("Account" + a.getAccountName() + " has been rejected!");
+		Connection conn = cf.getConnection();
+		
+		
+		try {
+			String sql = "delete from \"account\" where \"accountName\" = '" + a.getAccountName() + "';";
+			
+			PreparedStatement reject = conn.prepareStatement(sql);
+			reject.executeUpdate();
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public void viewAllAccounts() {
-		//write SQL stuff
-		//select * from accounts and loop through results and print
 		
-		//dummy code for test
+		Connection conn = cf.getConnection();
 		
-		List<Account> allAccounts = new ArrayList<Account>();
-				
-		Account a1 = new Account();
-		Account a2 = new Account();
-		
-		a1.setAccountName("First Account");
-		a1.setAccountState(0);
-		a1.setBalance(500);
-		a1.setCustomerId(1);
-		
-		a2.setAccountName("Second Account");
-		a2.setAccountState(0);
-		a2.setBalance(10000);
-		a2.setCustomerId(1);
-		
-		allAccounts.add(a1);
-		allAccounts.add(a2);
-		
-		for (int i = 0; i < allAccounts.size(); i++) {
-			System.out.println("Account Name: " + allAccounts.get(i).getAccountName() +
-					"	Account Balance: " + allAccounts.get(i).getBalance() +
-					"	Customer ID: " + allAccounts.get(i).getCustomerId());
+		try {
+			String sql = "select * from \"account\"";
+			
+			PreparedStatement showAll = conn.prepareStatement(sql);
+			ResultSet res = showAll.executeQuery();
+			
+			while(res.next()) {
+				System.out.println("Account Name: " + res.getString("accountName") +
+						"	Account Balance: " + res.getDouble("balance") +
+						"	Customer ID: " + res.getInt("customerId"));
+			}
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
 		}
 	}
 
