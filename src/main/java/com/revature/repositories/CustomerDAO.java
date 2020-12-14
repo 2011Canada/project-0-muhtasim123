@@ -126,29 +126,126 @@ public class CustomerDAO {
 	}
 	
 	public void withdrawFunds(Customer c, Account a, double amount) {
-		//write SQL stuff
-		System.out.println("$" + amount + " withdrawn from account " + a.getAccountName());
+		
+		Connection conn = cf.getConnection();
+		double balance = balance(a);
+		double total = balance-amount;
+		
+		try {
+			String sql = "update \"account\" set \"balance\" = " + total + " where \"accountName\" = '" + a.getAccountName() + "';";
+			
+			Statement withdrawFunds = conn.createStatement();
+			withdrawFunds.executeUpdate(sql);
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public void allBalance(Customer c) {
-		//write SQL stuff
-		System.out.println("Account: muhtasim		Balance: $500");
+		
+		Connection conn = cf.getConnection();
+		
+		try {
+			String sql = "select \"accountName\", \"balance\" from \"account\" where \"customerId\" = " + c.getCustomerId() + ";";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ResultSet res = ps.executeQuery();
+			
+			while (res.next()) {
+				System.out.println("Account name: " + res.getString("accountName") + "		Balance: " + res.getDouble("balance"));
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public void transferFunds(Transfers transfer) {
-		//write SQL stuff
-		//remember to include a transfer status in the query
-		System.out.println("$" + transfer.getAmount() + " transfered from " + transfer.getAccountFrom() + " to " + transfer.getAccountTo());
+		
+		Connection conn = cf.getConnection();
+		
+		try {
+			String sql = "insert into \"transfer\" (\"accountFrom\", \"accountTo\", \"amount\", \"transferStatus\", \"customerId\") values (?, ?, ?, ?, ?);";
+			
+			PreparedStatement insertTransfer = conn.prepareStatement(sql);
+			
+			insertTransfer.setString(1, transfer.getAccountFrom());
+			insertTransfer.setString(2, transfer.getAccountTo());
+			insertTransfer.setDouble(3, transfer.getAmount());
+			insertTransfer.setInt(4, transfer.getTransferStatus());
+			insertTransfer.setInt(5, transfer.getCustomerId());
+			
+			insertTransfer.executeUpdate();
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public void viewTransfers(Customer c) {
-		//write SQL stuff
-		//select * by customerId and loop through results then print
-		System.out.println("Transfer Pending");
+		
+		Connection conn = cf.getConnection();
+		
+		try {
+			String sql = "select * from \"transfer\" where \"customerId\" = " + c.getCustomerId() + " and \"transferStatus\" = 0;";
+			
+			PreparedStatement getTransfer = conn.prepareStatement(sql);
+			ResultSet res = getTransfer.executeQuery();
+			
+			while(res.next()) {
+				System.out.println("Transfer: " + res.getInt("transferId") + "	From: " + res.getString("accountFrom") + "	To: " + res.getString("accountTo") + "	Amount: " + res.getDouble("amount"));
+			}
+			
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public void acceptTransfer(Transfers t) {
-		//write SQL stuff
-		//accept transfer according to the transfer id
+		
+		Connection conn = cf.getConnection();
+		
+		try {
+			String select = "select * from \"transfer\" where \"transferId\" = " + t.getTransferId() + ";";
+			
+			PreparedStatement ps = conn.prepareStatement(select);
+			ResultSet res = ps.executeQuery();
+			
+			while(res.next()) {
+				t.setAccountFrom(res.getString("accountFrom"));
+				t.setAccountTo(res.getString("accountTo"));
+				t.setAmount(res.getDouble("amount"));
+				t.setCustomerId(res.getInt("customerId"));
+			}
+			
+			Account a = new Account();
+			a.setAccountName(t.getAccountFrom());
+			Account a2 = new Account();
+			a2.setAccountName(t.getAccountTo());
+			
+			double totalFrom = balance(a) - t.getAmount();
+			double totalTo = balance(a2) + t.getAmount();
+			
+			String accountFrom = "update \"account\" set \"balance\" = " + totalFrom + " where \"accountName\" = '" + t.getAccountFrom() + "';";
+			
+			String accountTo = "update \"account\" set \"balance\" = " + totalTo + " where \"accountName\" = '" + t.getAccountTo() + "';";
+			
+			PreparedStatement ps1 = conn.prepareStatement(accountFrom);
+			ps1.executeUpdate();
+			
+			PreparedStatement ps2 = conn.prepareStatement(accountTo);
+			ps2.executeUpdate();
+			
+			String sql = "update \"transfer\" set \"transferStatus\" = 1 where \"transferId\" = " + t.getTransferId() + ";";
+			
+			PreparedStatement updateTransfer = conn.prepareStatement(sql);
+			
+			updateTransfer.executeUpdate();
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 }

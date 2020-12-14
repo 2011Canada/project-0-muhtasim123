@@ -49,3 +49,22 @@
 2020-12-14 16:00:21 project0 [INFO] Bank App started
 2020-12-14 16:00:32 project0 [INFO] $200.0 deposited into account testing for customer 1
 2020-12-14 16:00:45 project0 [INFO] $50.0 deposited into account testing2 for customer 1
+2020-12-14 16:03:06 project0 [INFO] Bank App started
+2020-12-14 16:03:15 project0 [INFO] $500.0 deposited into account testing for customer 1
+2020-12-14 16:03:39 project0 [INFO] $100.0 deposited into account testing for customer 1
+2020-12-14 16:03:46 project0 [INFO] $1000.0 withdrawn into account testing for customer 1
+2020-12-14 16:08:02 project0 [INFO] Bank App started
+2020-12-14 16:08:50 project0 [INFO] Bank App started
+2020-12-14 16:29:41 project0 [INFO] Bank App started
+2020-12-14 16:29:58 project0 [INFO] $10.0 transfered from account testing to account testing2
+2020-12-14 16:30:17 project0 [INFO] Bank App started
+2020-12-14 16:30:54 project0 [INFO] $25.0 transfered from account testing2 to account testing
+2020-12-14 17:09:34 project0 [INFO] Bank App started
+2020-12-14 17:10:32 project0 [INFO] Bank App started
+2020-12-14 17:11:51 project0 [INFO] Bank App started
+2020-12-14 17:27:27 project0 [INFO] Bank App started
+2020-12-14 17:27:43 project0 [INFO] Transfer ID 2 has been accepted
+2020-12-14 17:28:41 project0 [INFO] Bank App started
+2020-12-14 17:59:51 project0 [INFO] Bank App started
+2020-12-14 18:00:06 project0 [INFO] $25.0 transfered from account testing2 to account testing
+2020-12-14 18:00:12 project0 [INFO] Transfer ID 3 has been accepted

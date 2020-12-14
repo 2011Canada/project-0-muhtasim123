@@ -162,27 +162,27 @@ public class MainMenu {
 		
 		switch(choice) {
 			case 1:
-				System.out.println("\n-----New Account-----");
+				System.out.println("\n-----New Account-----\n");
 				newAccountMenu(c);
 				break;
 			case 2:
-				System.out.println("\n-----Deposit Funds-----");
+				System.out.println("\n-----Deposit Funds-----\n");
 				depositFunds(c);
 				break;
 			case 3:
-				System.out.println("\n-----Withdraw Funds-----");
+				System.out.println("\n-----Withdraw Funds-----\n");
 				withdrawFunds(c);
 				break;
 			case 4:
-				System.out.println("\n-----View Balance-----");
+				System.out.println("\n-----View Balance-----\n");
 				viewBalance(c);
 				break;
 			case 5:
-				System.out.println("\n-----Transfer Funds-----");
+				System.out.println("\n-----Transfer Funds-----\n");
 				transferFunds(c);
 				break;
 			case 6:
-				System.out.println("\n-----View Pending Transfer-----");
+				System.out.println("\n-----View Pending Transfer-----\n");
 				pendingTransfer(c);
 				break;
 		}
@@ -305,7 +305,7 @@ public class MainMenu {
 		
 		cs.viewTransfers(c);
 		
-		System.out.print("Select transfer to accept: ");
+		System.out.print("\n\nSelect transfer to accept: ");
 		int transferId = in.nextInt();
 		
 		cs.acceptTransfer(transferId);
@@ -338,18 +338,18 @@ public class MainMenu {
 		
 		switch(choice) {
 			case 1:
-				System.out.println("\n-----Approve Accounts-----");
+				System.out.println("\n-----Approve Accounts-----\n");
 				approveAccount(e);
 				break;
 			case 2:
-				System.out.println("\n-----Reject Accounts-----");
+				System.out.println("\n-----Reject Accounts-----\n");
 				rejectAccount(e);
 			case 3:
-				System.out.println("\n-----View All Accounts-----");
+				System.out.println("\n-----View All Accounts-----\n");
 				viewAllAccounts(e);
 				break;
 			case 4:
-				System.out.println("\n-----View All Transactions-----");
+				System.out.println("\n-----View All Transactions-----\n");
 				viewAllTransactions(e);
 				break;
 		}
