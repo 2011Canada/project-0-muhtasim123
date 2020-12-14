@@ -4,6 +4,10 @@ public class Customer extends User{
 	private int bankAccount;
 	private int customerId;
 	
+	//default
+	public Customer() {
+		super();
+	}
 	//for new customer with bank account
 	public Customer (String username, String password, String firstName, String lastName, int bankAccount) {
 		super(username, password, firstName, lastName);

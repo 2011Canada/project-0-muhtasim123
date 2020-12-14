@@ -6,6 +6,8 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.revature.models.Customer;
+import com.revature.models.Employee;
 import com.revature.repositories.LoginDAO;
 import com.revature.services.CustomerServices;
 
@@ -68,12 +70,12 @@ public class MainMenu {
 		
 		LoginDAO cusLogin = new LoginDAO();
 		
-		int loginAttempt = cusLogin.customerLogin(username, password);
+		Customer cus = cusLogin.customerLogin(username, password);
 		
-		if (loginAttempt == 1) {
+		if (cus != null) {
 			System.out.println("\n\nLogin Successful!");
 			System.out.println("\n\n-----Customer Menu!-----");
-			customerMenu();
+			customerMenu(cus);
 		} else {
 			System.out.println("\n\nLogin credentials incorrect, please try again\n");
 			customerLogin();
@@ -94,12 +96,12 @@ public class MainMenu {
 		
 		LoginDAO empLogin = new LoginDAO();
 		
-		int loginAttempt = empLogin.employeeLogin(username, password);
+		Employee emp = empLogin.employeeLogin(username, password);
 		
-		if (loginAttempt == 1) {
+		if (emp != null) {
 			System.out.println("\n\nLogin Successful!");
 			System.out.println("\n\n-----Employee Menu!-----");
-			employeeMenu();
+			employeeMenu(emp);
 		} else {
 			System.out.println("\n\nLogin credentials incorrect, please try again\n");
 			employeeLogin();
@@ -107,6 +109,7 @@ public class MainMenu {
 	}
 	
 	public void newCustomer() {
+		
 		in.nextLine();
 		
 		System.out.print("Enter first name: ");
@@ -122,17 +125,79 @@ public class MainMenu {
 		String password = in.nextLine();
 		
 		CustomerServices cs = new CustomerServices();
-		cs.createAccount(username, password, firstName, lastName);
+		cs.createCustomer(username, password, firstName, lastName);
 		
 		System.out.println("\n\n\n");
 		firstMenu();
 	}
 	
-	public void customerMenu() {
+	public void customerMenu(Customer c) {
+		
+		int choice = 0;
+		System.out.println("\nHello " + c.getFirstName() + " " + c.getLastName() + "!");
+		
+		System.out.println("\nSelect one of the options below: " +
+				"\n	1 - Apply for a new account" +
+				"\n	2 - Deposit Funds" +
+				"\n	3 - Withdraw Funds" +
+				"\n	4 - View Balance" +
+				"\n	5 - Transfer Funds" +
+				"\n	6 - View Pending Transfers");
+		
+		try {
+			choice = in.nextInt();
+			if (choice <= 0 || choice > 6) {
+				System.out.println("\n\nPlease select a valid option: \n");
+				customerMenu(c);
+			}
+		} catch (InputMismatchException e) {
+			System.out.println("\n\nPlease select a valid option: \n");
+			customerMenu(c);
+		}
+		
+		switch(choice) {
+			case 1:
+				System.out.println("\n-----New Account-----");
+				newAccountMenu(c);
+				break;
+			case 2:
+				System.out.println("2");
+				break;
+			case 3:
+				System.out.println("3");
+				break;
+			case 4:
+				System.out.println("4");
+				break;
+			case 5:
+				System.out.println("5");
+				break;
+			case 6:
+				System.out.println("6");
+				break;
+		}
 		
 	}
 	
-	public void employeeMenu() {
+	public void newAccountMenu(Customer c) {
+		
+		in.nextLine();
+		
+		System.out.println("Emter account name: ");
+		String accountName = in.nextLine();
+		
+		System.out.println("Enter starting balance: ");
+		double balance = in.nextDouble();
+		
+		int customerId = c.getCustomerId();
+		
+		CustomerServices cs = new CustomerServices();
+		cs.createAccount(accountName, customerId, balance);
+		
+		customerMenu(c);
+	}
+	
+	public void employeeMenu(Employee e) {
 		
 	}
 }

@@ -2,11 +2,13 @@ package com.revature.models;
 
 public class Account {
 	
+	String accountName;
 	int customerId;
 	double balance;
 	int accountState;
 	
-	public Account(int customerId, double balance, int accountState) {
+	public Account(String accountName, int customerId, double balance, int accountState) {
+		this.accountName = accountName;
 		this.customerId = customerId;
 		this.balance = balance;
 		this.accountState = accountState;
@@ -30,6 +32,18 @@ public class Account {
 
 	public int getCustomerId() {
 		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
 	}
 	
 	
