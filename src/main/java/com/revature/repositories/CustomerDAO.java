@@ -34,4 +34,20 @@ public class CustomerDAO {
 		//write SQL stuff
 		System.out.println("$" + amount + " deposited in account " + a.getAccountName());
 	}
+	
+	public double balance(Account a) {
+		//write SQL stuff
+		double balance = 500;
+		return balance;
+	}
+	
+	public void withdrawFunds(Customer c, Account a, double amount) {
+		//write SQL stuff
+		System.out.println("$" + amount + " withdrawn from account " + a.getAccountName());
+	}
+	
+	public void allBalance(Customer c) {
+		//write SQL stuff
+		System.out.println("Account: muhtasim		Balance: $500");
+	}
 }

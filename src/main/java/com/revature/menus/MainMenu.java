@@ -169,13 +169,16 @@ public class MainMenu {
 				withdrawFunds(c);
 				break;
 			case 4:
-				System.out.println("4");
+				System.out.println("\n-----View Balance-----");
+				viewBalance(c);
 				break;
 			case 5:
-				System.out.println("5");
+				System.out.println("\n-----Transfer Funds-----");
+				transferFunds(c);
 				break;
 			case 6:
-				System.out.println("6");
+				System.out.println("\n-----View Pending Transfer-----");
+				pendingTransfer(c);
 				break;
 		}
 		
@@ -219,6 +222,45 @@ public class MainMenu {
 	}
 	
 	public void withdrawFunds(Customer c) {
+		
+		CustomerServices cs = new CustomerServices();
+		
+		cs.viewAccount(c);
+		
+		in.nextLine();
+		
+		System.out.print("\n\nEnter the account name: ");
+		String accountName = in.nextLine();
+		
+		System.out.print("Enter withdrawal amount: ");
+		double amount = in.nextDouble();
+		
+		double balance = cs.balance(c, accountName);
+		
+		if (amount > balance) {
+			System.out.println("There is not enough funds in this account\n\n");
+			customerMenu(c);
+		} else {
+			cs.withdrawFunds(c, amount, accountName);
+		}
+	}
+	
+	public void viewBalance(Customer c) {
+		
+		CustomerServices cs = new CustomerServices();
+		
+		cs.allBalance(c);
+		
+		System.out.println("\n\n\n");
+		
+		customerMenu(c);
+	}
+	
+	public void transferFunds(Customer c) {
+		
+	}
+	
+	public void pendingTransfer(Customer c) {
 		
 	}
 	

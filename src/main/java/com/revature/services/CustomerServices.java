@@ -22,7 +22,7 @@ public class CustomerServices {
 		CustomerDAO cusdao = new CustomerDAO();
 		cusdao.createAccount(acc);
 	}
-	
+
 	public void viewAccount(Customer c) {
 		CustomerDAO cusdao = new CustomerDAO();
 		cusdao.viewAccount(c);
@@ -35,6 +35,35 @@ public class CustomerServices {
 		acc.setAccountName(account);
 		
 		cusdao.depositFunds(c, acc, amount);
+	}
+	
+	public double balance(Customer c, String account) {
+		
+		double balance = 0;
+		
+		CustomerDAO cusdao = new CustomerDAO();
+		Account acc = new Account();
+		
+		acc.setAccountName(account);
+		balance = cusdao.balance(acc);
+		
+		return balance;
+	}
+	
+	public void withdrawFunds(Customer c, double amount, String account) {
+		
+		CustomerDAO cusdao = new CustomerDAO();
+		Account acc = new Account();
+		
+		acc.setAccountName(account);
+	
+		cusdao.withdrawFunds(c, acc, amount);
+	}
+	
+	public void allBalance(Customer c) {
+		
+		CustomerDAO cusdao = new CustomerDAO();
+		cusdao.allBalance(c);
 	}
 
 }
