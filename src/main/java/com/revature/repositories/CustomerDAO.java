@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.revature.models.Account;
 import com.revature.models.Customer;
+import com.revature.models.Transfers;
 
 public class CustomerDAO {
 	
@@ -49,5 +50,10 @@ public class CustomerDAO {
 	public void allBalance(Customer c) {
 		//write SQL stuff
 		System.out.println("Account: muhtasim		Balance: $500");
+	}
+	
+	public void transferFunds(Transfers transfer, double amount) {
+		//write SQL stuff
+		System.out.println("$" + amount + " transfered from " + transfer.getAccountFrom() + " to " + transfer.getAccountTo());
 	}
 }

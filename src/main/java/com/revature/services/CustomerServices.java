@@ -2,6 +2,7 @@ package com.revature.services;
 
 import com.revature.models.Account;
 import com.revature.models.Customer;
+import com.revature.models.Transfers;
 import com.revature.repositories.CustomerDAO;
 
 public class CustomerServices {
@@ -64,6 +65,17 @@ public class CustomerServices {
 		
 		CustomerDAO cusdao = new CustomerDAO();
 		cusdao.allBalance(c);
+	}
+	
+	public void transferFunds(String accountFrom, String accountTo, double amount) {
+		//Account accFrom = new Account();
+		//Account accTo = new Account();
+		CustomerDAO cusdao = new CustomerDAO();
+		
+		Transfers transfer  = new Transfers();
+		
+		cusdao.transferFunds(transfer, amount);
+		
 	}
 
 }

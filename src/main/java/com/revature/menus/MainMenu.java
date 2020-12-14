@@ -242,6 +242,7 @@ public class MainMenu {
 			customerMenu(c);
 		} else {
 			cs.withdrawFunds(c, amount, accountName);
+			customerMenu(c);
 		}
 	}
 	
@@ -257,6 +258,31 @@ public class MainMenu {
 	}
 	
 	public void transferFunds(Customer c) {
+		
+		CustomerServices cs = new CustomerServices();
+		
+		cs.viewAccount(c);
+		
+		in.nextLine(); 
+		
+		System.out.print("Select account to transfer from: ");
+		String accountFrom = in.nextLine();
+		
+		System.out.print("Enter account name to transfer to: ");
+		String accountTo = in.nextLine();
+		
+		System.out.print("Enter amount to transfer: ");
+		double amount = in.nextDouble();
+		
+		double balance = cs.balance(c, accountFrom);
+		
+		if (amount > balance) {
+			System.out.println("There is not enough funds in this account\n\n");
+			customerMenu(c);
+		} else {
+			cs.transferFunds(accountFrom, accountTo, amount);
+			customerMenu(c);
+		}
 		
 	}
 	
