@@ -161,10 +161,12 @@ public class MainMenu {
 				newAccountMenu(c);
 				break;
 			case 2:
-				System.out.println("2");
+				System.out.println("\n-----Deposit Funds-----");
+				depositFunds(c);
 				break;
 			case 3:
-				System.out.println("3");
+				System.out.println("\n-----Withdraw Funds-----");
+				withdrawFunds(c);
 				break;
 			case 4:
 				System.out.println("4");
@@ -195,6 +197,29 @@ public class MainMenu {
 		cs.createAccount(accountName, customerId, balance);
 		
 		customerMenu(c);
+	}
+	
+	public void depositFunds(Customer c) {
+		
+		CustomerServices cs = new CustomerServices();
+		
+		cs.viewAccount(c);
+		
+		in.nextLine();
+		
+		System.out.print("\n\nEnter the account name: ");
+		String accountName = in.nextLine();
+		
+		System.out.print("Enter deposit amount: ");
+		double amount = in.nextDouble();
+		
+		cs.depositFunds(c, amount, accountName);
+		
+		customerMenu(c);
+	}
+	
+	public void withdrawFunds(Customer c) {
+		
 	}
 	
 	public void employeeMenu(Employee e) {

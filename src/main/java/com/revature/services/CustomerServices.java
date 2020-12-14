@@ -22,5 +22,19 @@ public class CustomerServices {
 		CustomerDAO cusdao = new CustomerDAO();
 		cusdao.createAccount(acc);
 	}
+	
+	public void viewAccount(Customer c) {
+		CustomerDAO cusdao = new CustomerDAO();
+		cusdao.viewAccount(c);
+	}
+	
+	public void depositFunds(Customer c, double amount, String account) {
+		
+		CustomerDAO cusdao = new CustomerDAO();
+		Account acc = new Account();
+		acc.setAccountName(account);
+		
+		cusdao.depositFunds(c, acc, amount);
+	}
 
 }

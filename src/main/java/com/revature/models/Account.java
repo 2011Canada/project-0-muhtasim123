@@ -7,6 +7,11 @@ public class Account {
 	double balance;
 	int accountState;
 	
+	//default
+	public Account() {
+		super();
+	}
+	
 	public Account(String accountName, int customerId, double balance, int accountState) {
 		this.accountName = accountName;
 		this.customerId = customerId;
