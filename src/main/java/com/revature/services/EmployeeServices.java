@@ -27,4 +27,20 @@ public class EmployeeServices {
 		
 		empdao.acceptAccount(acc);
 	}
+	
+	public void rejectAccount(String account) {
+		
+		Account acc = new Account();
+		acc.setAccountName(account);
+		
+		EmployeeDAO empdao = new EmployeeDAO();
+		
+		empdao.acceptAccount(acc);
+	}
+	
+	public void viewAllAccounts() {
+		
+		EmployeeDAO empdao = new EmployeeDAO();
+		empdao.viewAllAccounts();
+	}
 }

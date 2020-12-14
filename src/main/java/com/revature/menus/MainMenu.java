@@ -220,9 +220,14 @@ public class MainMenu {
 		System.out.print("Enter deposit amount: ");
 		double amount = in.nextDouble();
 		
-		cs.depositFunds(c, amount, accountName);
+		if (amount > 0) {
+			cs.depositFunds(c, amount, accountName);
+			customerMenu(c);
+		} else {
+			System.out.println("\nCannot deposit negative amount!\n\n");
+			depositFunds(c);
+		}
 		
-		customerMenu(c);
 	}
 	
 	public void withdrawFunds(Customer c) {
@@ -243,7 +248,10 @@ public class MainMenu {
 		
 		if (amount > balance) {
 			System.out.println("There is not enough funds in this account\n\n");
-			customerMenu(c);
+			withdrawFunds(c);
+		} else if (amount < 0) {
+			System.out.println("\nCannot withdraw negative amount!\n\n");
+			withdrawFunds(c);
 		} else {
 			cs.withdrawFunds(c, amount, accountName);
 			customerMenu(c);
@@ -312,12 +320,13 @@ public class MainMenu {
 		
 		System.out.println("\nSelect one of the options below: " +
 				"\n	1 - Approve Accounts" +
-				"\n	2 - View All Accounts" +
-				"\n	3 - View All Transactions");
+				"\n	2 - Reject Accounts" +
+				"\n	3 - View All Accounts" +
+				"\n	4 - View All Transactions");
 		
 		try {
 			choice = in.nextInt();
-			if (choice <= 0 || choice > 3) {
+			if (choice <= 0 || choice > 4) {
 				System.out.println("\n\nPlease select a valid option: \n");
 				employeeMenu(e);
 			}
@@ -332,10 +341,13 @@ public class MainMenu {
 				approveAccount(e);
 				break;
 			case 2:
-				System.out.println("\n-----View All Accounts-----");
-				employeeMenu(e);
-				break;
+				System.out.println("\n-----Reject Accounts-----");
+				rejectAccount(e);
 			case 3:
+				System.out.println("\n-----View All Accounts-----");
+				viewAllAccounts(e);
+				break;
+			case 4:
 				System.out.println("\n-----View All Transactions-----");
 				employeeMenu(e);
 				break;
@@ -376,6 +388,57 @@ public class MainMenu {
 				approveAccount(e);
 			}
 		}
+	}
+	
+	public void rejectAccount(Employee e) {
+		
+		EmployeeServices es = new EmployeeServices();
+		List<Account> allPendingAccounts = new ArrayList<Account>();
+		
+		List<String> accountNames = new ArrayList<>();
+		
+		allPendingAccounts = es.allPendingAccounts();
+		
+		for (int i = 0; i < allPendingAccounts.size(); i++) {
+			System.out.println("Account Name: " + allPendingAccounts.get(i).getAccountName() +
+					"	Account Balance: " + allPendingAccounts.get(i).getBalance() +
+					"	Customer ID: " + allPendingAccounts.get(i).getCustomerId());
+			
+			String accountName = allPendingAccounts.get(i).getAccountName();
+			accountNames.add(accountName);
+		}
+		
+		System.out.println("\n\n\n");
+		
+		in.nextLine();
+		
+		System.out.print("Enter account name to reject: ");
+		String account = in.nextLine();
+		
+		for (int i = 0; i < accountNames.size(); i++) {
+			if (accountNames.get(i).contentEquals(account)) {
+				es.rejectAccount(account);
+				employeeMenu(e);
+			} else {
+				System.out.println("\n\nInvalid selection!\n\n\n");
+				rejectAccount(e);
+			}
+		}
+	}
+	
+	public void viewAllAccounts(Employee e) {
+		EmployeeServices es = new EmployeeServices();
+		es.viewAllAccounts();
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		employeeMenu(e);
+		
 	}
 }
 
