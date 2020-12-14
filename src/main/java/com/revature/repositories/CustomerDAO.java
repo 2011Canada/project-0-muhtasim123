@@ -1,7 +1,9 @@
 package com.revature.repositories;
 
 import java.sql.Connection;
-import java.util.Random;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.revature.models.Account;
 import com.revature.models.Customer;
@@ -13,23 +15,56 @@ public class CustomerDAO {
 	ConnectionFactory cf = ConnectionFactory.getConnectionFacotry();
 	
 	public void createCustomer(Customer c) {
-		//insert into customer values username, password, firstName, lastName
+
 		Connection conn = cf.getConnection();
-		int userid = 0;
+
 		
-		System.out.println("\n\nAccount for " + c.getFirstName() + " " + c.getLastName() + " is created");
-	
-		Random rand = new Random();
-		userid = rand.nextInt();
-		System.out.println(userid);
-		c.setCustomerId(userid);
-		
+		try {
+			String sql = "insert into \"customer\" (\"username\", \"password\", \"firstName\", \"lastName\") "
+					+ "values (?, ?, ?, ?) "
+					+ "returning \"customerId\";";
+			
+			PreparedStatement insertCustomer = conn.prepareStatement(sql);
+			
+			insertCustomer.setString(1, c.getUsername());
+			insertCustomer.setString(2, c.getPassword());
+			insertCustomer.setString(3, c.getFirstName());
+			insertCustomer.setString(4, c.getLastName());
+			
+			ResultSet res = insertCustomer.executeQuery();
+			
+			if (res.next()) {
+				c.setCustomerId(res.getInt("customerId"));
+			} else {
+				throw new SQLException();
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 		
 	}
 	
 	public void createAccount(Account a) {
-		//write SQL stuff
-		System.out.println("Account created '" + a.getAccountName() + "'");
+	
+		Connection conn = cf.getConnection();
+		
+		try {
+			String sql = "insert into \"account\" (\"accountName\", \"balance\", \"accountState\", \"customerId\") "
+					+ "values (?, ?, ?, ?);";
+			
+			PreparedStatement insertAccount = conn.prepareStatement(sql);
+			
+			insertAccount.setString(1, a.getAccountName());
+			insertAccount.setDouble(2, a.getBalance());
+			insertAccount.setInt(3, a.getAccountState());
+			insertAccount.setInt(4, a.getCustomerId());
+			
+			insertAccount.executeUpdate();
+
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public void viewAccount(Customer c) {
