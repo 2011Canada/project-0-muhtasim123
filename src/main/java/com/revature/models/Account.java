@@ -6,16 +6,32 @@ public class Account {
 	double balance;
 	int accountState;
 	
-	public Account() {
-		this.customerId = 0;
-		this.balance = 0;
-		this.accountState = 0;
-	}
-	
 	public Account(int customerId, double balance, int accountState) {
 		this.customerId = customerId;
 		this.balance = balance;
 		this.accountState = accountState;
 	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+	public int getAccountState() {
+		return accountState;
+	}
+
+	public void setAccountState(int accountState) {
+		this.accountState = accountState;
+	}
+
+	public int getCustomerId() {
+		return customerId;
+	}
+	
+	
 
 }
