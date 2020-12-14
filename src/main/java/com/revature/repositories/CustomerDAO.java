@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import com.revature.models.Account;
 import com.revature.models.Customer;
@@ -68,19 +69,59 @@ public class CustomerDAO {
 	}
 	
 	public void viewAccount(Customer c) {
-		//write SQL stuff
-		//int customerId = c.getCustomerId();
-		System.out.println("muhtasim");
+		
+		Connection conn = cf.getConnection();
+		
+		try {
+			String sql = "select \"accountName\", \"balance\" from \"account\" where \"customerId\" = '" + c.getCustomerId() + "' and \"accountState\" = 1;";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ResultSet res = ps.executeQuery();
+			
+			while (res.next()) {
+				System.out.println("Account name: " + res.getString("accountName") + "		Balance: " + res.getDouble("balance"));
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public void depositFunds(Customer c, Account a, double amount) {
-		//write SQL stuff
-		System.out.println("$" + amount + " deposited in account " + a.getAccountName());
+		
+		Connection conn = cf.getConnection();
+		double balance = balance(a);
+		double total = balance+amount;
+		
+		try {
+			String sql = "update \"account\" set \"balance\" = " + total + " where \"accountName\" = '" + a.getAccountName() + "';";
+			
+			Statement depositFunds = conn.createStatement();
+			depositFunds.executeUpdate(sql);
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public double balance(Account a) {
-		//write SQL stuff
-		double balance = 500;
+		
+		double balance = 0;
+		
+		Connection conn = cf.getConnection();
+		
+		try {
+			String sql = "select \"balance\" from \"account\" where \"accountName\" = '" + a.getAccountName() + "';";
+			
+			PreparedStatement getBalance = conn.prepareStatement(sql);
+			ResultSet res = getBalance.executeQuery();
+			
+			while (res.next()) {
+				balance = res.getDouble("balance");
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 		return balance;
 	}
 	

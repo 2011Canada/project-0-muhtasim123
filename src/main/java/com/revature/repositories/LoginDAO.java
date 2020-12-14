@@ -20,8 +20,8 @@ public class LoginDAO {
 		try {
 			String sql = "select * from customer where \"username\" = '" + username + "' and \"password\" = '" + password + "';";
 			
-			Statement ps = conn.createStatement();
-			ResultSet res = ps.executeQuery(sql);
+			Statement s = conn.createStatement();
+			ResultSet res = s.executeQuery(sql);
 			
 			Customer c;
 			
@@ -49,8 +49,8 @@ public class LoginDAO {
 		try {
 			String sql = "select * from employee where \"username\" = '" + username + "' and \"password\" = '" + password + "';";
 			
-			Statement ps = conn.createStatement();
-			ResultSet res = ps.executeQuery(sql);
+			Statement s = conn.createStatement();
+			ResultSet res = s.executeQuery(sql);
 			
 			Employee e;
 			
