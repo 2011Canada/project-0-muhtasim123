@@ -3,7 +3,9 @@ package com.revature.repositories;
 public class TransactionDAO {
 
 	public void addTransaction(String transaction){
-		
+		//write SQL stuff
+		//insert into transaction values (?), transaction
+		System.out.println(transaction);
 	}
 	
 	public void allTransactions() {

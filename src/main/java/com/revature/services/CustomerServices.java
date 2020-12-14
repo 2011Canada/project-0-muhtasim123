@@ -1,5 +1,8 @@
 package com.revature.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.revature.models.Account;
 import com.revature.models.Customer;
 import com.revature.models.Transaction;
@@ -9,6 +12,7 @@ import com.revature.repositories.CustomerDAO;
 public class CustomerServices {
 	
 	TransactionServices ts = new TransactionServices();
+	static Logger logger = LogManager.getLogger("com.revature.project0");
 	
 	public void createCustomer(String username, String password, String firstName, String lastName) {
 		
@@ -20,6 +24,9 @@ public class CustomerServices {
 		
 		Transaction t = new Transaction("Customer login created for " + cus.getFirstName() + " " + cus.getLastName());
 		ts.addTransaction(t);
+		
+		System.out.println("Customer login created for " + cus.getFirstName() + " " + cus.getLastName());
+		logger.info("Customer login created for " + cus.getFirstName() + " " + cus.getLastName());
 		
 
 	}
@@ -33,6 +40,9 @@ public class CustomerServices {
 		
 		Transaction t = new Transaction("Account " + acc.getAccountName() + " created for " + acc.getCustomerId());
 		ts.addTransaction(t);
+		
+		System.out.println("Account " + acc.getAccountName() + " created for " + acc.getCustomerId());
+		logger.info("Account " + acc.getAccountName() + " created for " + acc.getCustomerId());
 	}
 
 	public void viewAccount(Customer c) {
@@ -50,6 +60,9 @@ public class CustomerServices {
 		
 		Transaction t = new Transaction("$" + amount + " deposited into account " + account + " for customer " + c.getCustomerId());
 		ts.addTransaction(t);
+		
+		System.out.println("$" + amount + " deposited into account " + account + " for customer " + c.getCustomerId());
+		logger.info("$" + amount + " deposited into account " + account + " for customer " + c.getCustomerId());
 	}
 	
 	public double balance(Customer c, String account) {
@@ -76,6 +89,9 @@ public class CustomerServices {
 		
 		Transaction t = new Transaction("$" + amount + " withdrawn into account " + account + " for customer " + c.getCustomerId());
 		ts.addTransaction(t);
+		
+		System.out.println("$" + amount + " withdrawn into account " + account + " for customer " + c.getCustomerId());
+		logger.info("$" + amount + " withdrawn into account " + account + " for customer " + c.getCustomerId());
 	}
 	
 	public void allBalance(Customer c) {
@@ -100,6 +116,9 @@ public class CustomerServices {
 		Transaction t = new Transaction("$" + amount + " transfered from account " + accountFrom + " to account " + accountTo);
 		ts.addTransaction(t);
 		
+		System.out.println("$" + amount + " transfered from account " + accountFrom + " to account " + accountTo);
+		logger.info("$" + amount + " transfered from account " + accountFrom + " to account " + accountTo);
+		
 	}
 	
 	public void viewTransfers(Customer c) {
@@ -114,6 +133,12 @@ public class CustomerServices {
 		
 		CustomerDAO cusdao = new CustomerDAO();
 		cusdao.acceptTransfer(transfer);
+		
+		Transaction t = new Transaction("Transfer ID " + transferId + " has been accepted");
+		ts.addTransaction(t);
+		
+		System.out.println("Transfer ID " + transferId + " has been accepted");
+		logger.info("Transfer ID " + transferId + " has been accepted");
 	}
 
 }
