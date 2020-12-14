@@ -67,14 +67,32 @@ public class CustomerServices {
 		cusdao.allBalance(c);
 	}
 	
-	public void transferFunds(String accountFrom, String accountTo, double amount) {
+	public void transferFunds(Customer c, String accountFrom, String accountTo, double amount) {
 		//Account accFrom = new Account();
 		//Account accTo = new Account();
 		CustomerDAO cusdao = new CustomerDAO();
 		
 		Transfers transfer  = new Transfers();
+		transfer.setAccountFrom(accountFrom);
+		transfer.setAccountTo(accountTo);
+		transfer.setAmount(amount);
+		transfer.setTransferStatus(0);
+		transfer.setCustomerId(c.getCustomerId());
+		cusdao.transferFunds(transfer);
 		
-		cusdao.transferFunds(transfer, amount);
+	}
+	
+	public void viewTransfers(Customer c) {
+		CustomerDAO cusdao = new CustomerDAO();
+		
+		cusdao.viewTransfers(c);
+	}
+	
+	public void acceptTransfer(int transferId) {
+		Transfers transfer = new Transfers();
+		transfer.setTransferId(transferId);
+		
+		CustomerDAO cusdao = new CustomerDAO();
 		
 	}
 

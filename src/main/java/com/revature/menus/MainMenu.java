@@ -280,13 +280,24 @@ public class MainMenu {
 			System.out.println("There is not enough funds in this account\n\n");
 			customerMenu(c);
 		} else {
-			cs.transferFunds(accountFrom, accountTo, amount);
+			cs.transferFunds(c, accountFrom, accountTo, amount);
 			customerMenu(c);
 		}
 		
 	}
 	
 	public void pendingTransfer(Customer c) {
+		
+		CustomerServices cs = new CustomerServices();
+		
+		cs.viewTransfers(c);
+		
+		System.out.print("Select transfer to accept: ");
+		int transferId = in.nextInt();
+		
+		cs.acceptTransfer(transferId);
+		
+		customerMenu(c);
 		
 	}
 	

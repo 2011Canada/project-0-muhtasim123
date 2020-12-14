@@ -52,8 +52,20 @@ public class CustomerDAO {
 		System.out.println("Account: muhtasim		Balance: $500");
 	}
 	
-	public void transferFunds(Transfers transfer, double amount) {
+	public void transferFunds(Transfers transfer) {
 		//write SQL stuff
-		System.out.println("$" + amount + " transfered from " + transfer.getAccountFrom() + " to " + transfer.getAccountTo());
+		//remember to include a transfer status in the query
+		System.out.println("$" + transfer.getAmount() + " transfered from " + transfer.getAccountFrom() + " to " + transfer.getAccountTo());
+	}
+	
+	public void viewTransfers(Customer c) {
+		//write SQL stuff
+		//select * by customerId and loop through results then print
+		System.out.println("Transfer Pending");
+	}
+	
+	public void acceptTransfer(Transfers t) {
+		//write SQL stuff
+		//accept transfer according to the transfer id
 	}
 }

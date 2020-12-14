@@ -7,6 +7,7 @@ public class Transfers {
 	private double amount;
 	private int transferId;
 	private int transferStatus;
+	private int customerId;
 	
 	public Transfers(String accountFrom, String accountTo, double amount) {
 		this.accountFrom = accountFrom;
@@ -57,6 +58,14 @@ public class Transfers {
 
 	public void setTransferStatus(int transferStatus) {
 		this.transferStatus = transferStatus;
+	}
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 	
 	
