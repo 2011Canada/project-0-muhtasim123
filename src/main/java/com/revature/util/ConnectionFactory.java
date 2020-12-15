@@ -16,9 +16,9 @@ public class ConnectionFactory {
 	
 	private ConnectionFactory(int numberOfConnections) {
 		
-		String url = "jdbc:postgresql://revature-db.cfdbjt00wi4b.us-east-2.rds.amazonaws.com:5432/postgres?currentSchema=bankapp";
-		String user = "postgres";
-		String password = "Soccer123!";
+		String url = System.getenv("DB_URL");
+		String user = System.getenv("DB_USER");
+		String password = System.getenv("DB_PASSWORD");
 		try {
 			this.conn = new Connection[numberOfConnections];
 			for (int i = 0; i < this.conn.length; i++) {
